@@ -3,7 +3,9 @@
 #include "MITshell.h"
 
 int main(int argc, char **argv) {
-	
-	main_loop();
+	char *looks;
+	LoadSetting("setting.mitshrc", &looks);	
+
+	main_loop(looks);
 	return EXIT_SUCCESS;
 }

@@ -8,16 +8,18 @@ char *read_line();
 char **split_line(char *line);
 
 // extern 宣言
+extern char *Mitsh_looks;
+
 extern int execute(char **args);
 
 // メインループ
-void main_loop() {
+void main_loop(char *looks) {
 	char *line;
 	char **args;
 	int status;
 	
 	do {
-		printf("> ");
+		printf("%s", looks);
 		line = read_line();
 		args = split_line(line);
 		status = execute(args);
