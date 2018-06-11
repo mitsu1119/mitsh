@@ -2,4 +2,4 @@
 # setting.mitshrc
 #
 
-Looks='[mitsh@yourself] $ '
+Looks='[mitsh@yourself]\n$ '
