@@ -17,13 +17,25 @@ void main_loop(char *looks) {
 	char *line;
 	char **args;
 	int status;
+	char buf[256];
 	
 	do {
-		printf("%s", looks);
+		strcpy(buf, looks);
+		for(int i=0; i<256; i++) {
+			if(buf[i] == '\0') break;
+			// 特殊文字の処理
+			if(buf[i] == '\\' && buf[i+1] == 'n') {
+				// 改行
+				printf("\n");
+				i++;
+				continue;
+			}
+			printf("%c", buf[i]);
+		}
+		
 		line = read_line();
 		args = split_line(line);
 		status = execute(args);
-		
 		free(args);
 	} while(status);
 }

@@ -16,26 +16,6 @@ int LoadSetting(char *path, char **looks) {
 		
 		if(strncmp(buf[0], "Looks=", 6) == 0) {	// looks の設定文
 			sscanf(buf[0], "Looks='%[^']'", buf[1]);
-			// エスケープシーケンスの処理
-			for(int i=0; i<256; i++) {
-				if(buf[1][i] == '\\') {
-					if(i+1 < 256 && buf[1][i+1] != '\0') {
-						switch(buf[1][i+1]) {
-						case 'n':
-							buf[1][i] = '\n';
-							for(int j=i+1; j<256-1; j++) {
-								// \の後の文字を削除 例)\\n⇒\\;
-								buf[1][j] = buf[1][j+1];
-							}
-							break;
-						default :
-							buf[1][i] = '\0';
-							break;
-						};
-					}
-				}
-				if(buf[1][i] == '\0') break;
-			}
 			strcpy(*looks, buf[1]);
 		}
 	}
