@@ -23,15 +23,22 @@ void main_loop(char *looks) {
 		strcpy(buf, looks);
 		for(int i=0; i<256; i++) {
 			if(buf[i] == '\0') break;
-			// 特殊文字の処理
+			/* 特殊文字の処理 */
+			/* 改行 */
 			if(buf[i] == '\\' && buf[i+1] == 'n') {
-				// 改行
 				printf("\n");
 				i++;
 				continue;
 			}
+			/* 色付け */
+			if(buf[i] == '\\' && buf[i+1] == 'c') {
+				printf("\x1b[%c%cm", buf[i+2], buf[i+3]);
+				i+=3;
+				continue;
+			}
 			printf("%c", buf[i]);
 		}
+		printf("\x1b[39m"); // 変更した色を戻す
 		
 		line = read_line();
 		args = split_line(line);
