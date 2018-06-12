@@ -24,16 +24,22 @@ void main_loop(char *looks) {
 		for(int i=0; i<256; i++) {
 			if(buf[i] == '\0') break;
 			/* 特殊文字の処理 */
-			/* 改行 */
-			if(buf[i] == '\\' && buf[i+1] == 'n') {
-				printf("\n");
-				i++;
-				continue;
-			}
-			/* 色付け */
-			if(buf[i] == '\\' && buf[i+1] == 'c') {
-				printf("\x1b[%c%cm", buf[i+2], buf[i+3]);
-				i+=3;
+			if(buf[i] == '\\') {
+				/* 改行 */
+				if(buf[i+1] == 'n') {
+					printf("\n");
+					i++;
+				}
+				/* 色付け */
+				if(buf[i+1] == 'c') {
+					printf("\x1b[%c%cm", buf[i+2], buf[i+3]);
+					i+=3;
+				}
+				/* \ 文字の入力 */
+				if(buf[i+1] == '\\') {
+					printf("\\");
+					i++;			
+				}
 				continue;
 			}
 			printf("%c", buf[i]);
